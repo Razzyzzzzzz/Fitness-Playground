@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------- Base ---------- */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Keeps anchored sections (#about, #programs...) from hiding under the sticky navbar */
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-ink text-white font-body antialiased overflow-x-hidden;
+  }
+
+  img,
+  svg,
+  video {
+    @apply block max-w-full;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    @apply bg-accent text-white;
+  }
+
+  /* Visible keyboard focus on everything interactive */
+  :focus-visible {
+    @apply outline outline-2 outline-offset-4 outline-accent;
+  }
+
+  /* Respect users who turn animations off */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/* ---------- Components ---------- */
+@layer components {
+  .h-display {
+    @apply font-display uppercase tracking-wide leading-[0.95];
+  }
+
+  .section {
+    @apply py-20 md:py-28 px-5 max-w-7xl mx-auto;
+  }
+
+  .eyebrow {
+    @apply text-accent font-semibold uppercase tracking-[0.25em] text-xs mb-3;
+  }
+
+  /* Buttons */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-7 py-3
+           font-semibold uppercase tracking-wider text-sm
+           transition-all duration-300 select-none
+           active:translate-y-0 disabled:opacity-50 disabled:pointer-events-none;
+  }
+
+  .btn-primary {
+    @apply bg-accent text-white hover:brightness-110 hover:-translate-y-0.5
+           hover:shadow-[0_10px_30px_-10px_rgba(220,38,38,0.7)];
+  }
+
+  .btn-ghost {
+    @apply border border-white/40 text-white
+           hover:border-accent hover:text-accent hover:-translate-y-0.5;
+  }
+
+  /* For banners over dark or photo backgrounds, where a black button disappears */
+  .btn-light {
+    @apply bg-white text-ink hover:bg-accent hover:text-white hover:-translate-y-0.5;
+  }
+}
+
+/* ---------- Utilities ---------- */
+@layer utilities {
+  /* Darkens a photo behind a red-tinted banner so white text stays readable */
+  .overlay-dark {
+    @apply relative isolate;
+  }
+  .overlay-dark::before {
+    content: '';
+    @apply absolute inset-0 -z-10 bg-gradient-to-b from-black/70 via-black/60 to-black/80;
+  }
+}
