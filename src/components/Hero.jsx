@@ -6,9 +6,11 @@ import {
   ChevronDown,
   ArrowUpRight,
   Dumbbell,
+  Activity,
+  HeartPulse,
 } from 'lucide-react'
 
-import { gym } from '../data'
+import { gym, images } from '../data'
 
 const go = (id) => {
   document.getElementById(id)?.scrollIntoView({
@@ -17,188 +19,143 @@ const go = (id) => {
   })
 }
 
-// BACKGROUND
+// HERO BACKGROUND
 function Background() {
-  const reduceMotion = useReducedMotion()
-
   return (
     <div
-      className="absolute inset-0 overflow-hidden bg-ink pointer-events-none"
+      className="absolute inset-0 z-0 overflow-hidden bg-black"
       aria-hidden="true"
     >
-      {/* RED LIGHTING */}
+      {/* Gym background image: src/assets/p02.png */}
+      <img
+        src={images.banner}
+        alt=""
+        loading="eager"
+        decoding="async"
+        className="absolute inset-0 h-full w-full object-cover object-center"
+      />
+
+      {/* Dark overlays for readability */}
+      <div className="absolute inset-0 bg-black/65" />
+
+      <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-black/40" />
+
+      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/35" />
+
+      {/* Red ambient lighting */}
       <div
         className="absolute inset-0"
         style={{
           background: `
-            radial-gradient(ellipse 65% 65% at 90% 20%, rgba(220,38,38,0.30), transparent 70%),
-            radial-gradient(ellipse 55% 55% at 5% 100%, rgba(127,29,29,0.22), transparent 70%)
+            radial-gradient(ellipse 55% 65% at 85% 35%, rgba(220,38,38,0.20), transparent 70%),
+            radial-gradient(ellipse 45% 45% at 5% 95%, rgba(127,29,29,0.18), transparent 70%)
           `,
         }}
       />
 
-      {/* GRID */}
+      {/* Decorative red accent */}
+      <div className="absolute right-[-12%] top-0 h-full w-[35%] -skew-x-12 bg-gradient-to-b from-red-600/10 via-red-600/5 to-transparent" />
+
+      {/* Background typography */}
       <div
-        className="absolute inset-0 opacity-40"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px)
-          `,
-          backgroundSize: '60px 60px',
-          maskImage: 'linear-gradient(to right, transparent, black)',
-          WebkitMaskImage: 'linear-gradient(to right, transparent, black)',
-        }}
-      />
-
-      {/* RED GEOMETRIC SHAPES */}
-      <motion.div
-        initial={reduceMotion ? false : { x: 150, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 1.2, ease: 'easeOut' }}
-        className="
-          absolute right-[-12%] top-0
-          h-full w-[42%]
-          -skew-x-12
-          bg-gradient-to-b
-          from-accent/25 via-accent/10 to-transparent
-        "
-      />
-
-      <motion.div
-        initial={reduceMotion ? false : { x: 200, opacity: 0 }}
-        animate={{ x: 0, opacity: 1 }}
-        transition={{ duration: 1.4, delay: 0.2 }}
-        className="
-          hidden md:block
-          absolute right-[18%] top-0
-          h-full w-24 -skew-x-12
-          bg-gradient-to-b from-accent/20 to-transparent
-        "
-      />
-
-      {/* AMBIENT GLOW */}
-      {!reduceMotion && (
-        <>
-          <motion.div
-            animate={{ x: [0, 35, 0], y: [0, 25, 0] }}
-            transition={{
-              duration: 15,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-            className="
-              absolute right-[8%] top-[15%]
-              h-72 w-72 rounded-full
-              bg-accent/25 blur-[110px]
-            "
-          />
-
-          <motion.div
-            animate={{ x: [0, -30, 0], y: [0, -25, 0] }}
-            transition={{
-              duration: 18,
-              repeat: Infinity,
-              ease: 'easeInOut',
-            }}
-            className="
-              absolute bottom-[5%] left-[15%]
-              h-64 w-64 rounded-full
-              bg-red-900/30 blur-[110px]
-            "
-          />
-        </>
-      )}
-
-      {/* BACKGROUND TYPOGRAPHY */}
-      <div
-        className="
-          absolute right-[-2%] bottom-[7%]
-          hidden lg:block
-          select-none font-display
-          text-[clamp(120px,18vw,280px)]
-          uppercase leading-none
-        "
+        className="absolute bottom-[5%] right-[-2%] hidden select-none font-display text-[clamp(120px,18vw,260px)] font-black uppercase leading-none lg:block"
         style={{
           color: 'transparent',
-          WebkitTextStroke: '2px rgba(255,255,255,0.055)',
+          WebkitTextStroke: '2px rgba(255,255,255,0.045)',
         }}
       >
         STRONG
       </div>
 
-      {/* FILM GRAIN */}
-      <div
-        className="absolute inset-0 opacity-[0.055] mix-blend-overlay"
-        style={{
-          backgroundImage:
-            "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>\")",
-        }}
-      />
-
-      {/* DARK OVERLAYS */}
-      <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/75 to-transparent" />
-
-      <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-ink to-transparent" />
-
+      {/* Vignette */}
       <div
         className="absolute inset-0"
         style={{
-          boxShadow: 'inset 0 0 160px rgba(0,0,0,0.65)',
+          boxShadow: 'inset 0 0 150px rgba(0,0,0,0.55)',
         }}
       />
     </div>
   )
 }
 
-// GYM INFORMATION
-function GymInfo() {
-  const hours = gym.hours?.[0]
+// FEATURE STRIP
+function FeatureStrip() {
+  const features = [
+    {
+      Icon: Dumbbell,
+      title: 'Strength',
+      description: 'Build power',
+    },
+    {
+      Icon: Activity,
+      title: 'Functional',
+      description: 'Move better',
+    },
+    {
+      Icon: HeartPulse,
+      title: 'Cardio',
+      description: 'Push limits',
+    },
+  ]
 
   return (
-    <div
-      className="
-        w-full max-w-sm
-        bg-black/65 backdrop-blur-xl
-        border border-white/10
-        border-l-[3px] border-l-accent
-        p-5 sm:p-6
-        shadow-2xl
-      "
-    >
-      <div className="flex items-start gap-4">
-        <div className="h-10 w-10 shrink-0 flex items-center justify-center bg-accent/10 text-accent">
-          <Clock size={19} />
+    <div className="mt-10 flex flex-wrap items-center gap-y-5 border-t border-white/15 pt-7 sm:mt-12 sm:pt-8">
+      {features.map(({ Icon, title, description }, index) => (
+        <div
+          key={title}
+          className={`flex items-center gap-3 pr-5 sm:pr-8 ${
+            index !== features.length - 1
+              ? 'mr-5 border-r border-white/20 sm:mr-8'
+              : ''
+          }`}
+        >
+          <Icon
+            size={27}
+            strokeWidth={1.7}
+            className="shrink-0 text-accent"
+          />
+
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wider text-white sm:text-sm">
+              {title}
+            </p>
+
+            <p className="mt-1 text-[10px] text-white/50 sm:text-xs">
+              {description}
+            </p>
+          </div>
         </div>
+      ))}
+    </div>
+  )
+}
 
-        <div className="min-w-0">
-          <p className="text-xs text-white font-bold uppercase tracking-wider">
-            {hours?.days || 'Monday – Saturday'}
-          </p>
+// GYM HOURS
+function GymHours() {
+  const hours = gym.hours?.[0]
+  const sunday = gym.hours?.[1]
 
-          <p className="text-sm text-white/55 mt-1">
-            {hours?.time || '6:00 AM – 10:30 PM'}
-          </p>
+  return (
+    <div className="mt-6 flex flex-col gap-3 text-xs text-white/55 sm:flex-row sm:flex-wrap sm:gap-x-7">
+      {hours && (
+        <div className="flex items-center gap-2">
+          <Clock size={15} className="shrink-0 text-accent" />
+
+          <span>
+            {hours.days}: {hours.time}
+          </span>
         </div>
-      </div>
+      )}
 
-      <div className="h-px bg-white/10 my-5" />
+      {sunday && (
+        <div className="flex items-center gap-2">
+          <Clock size={15} className="shrink-0 text-accent" />
 
-      <div className="flex items-start gap-4">
-        <div className="h-10 w-10 shrink-0 flex items-center justify-center bg-accent/10 text-accent">
-          <MapPin size={19} />
+          <span>
+            Sunday: {sunday.time}
+          </span>
         </div>
-
-        <div className="min-w-0">
-          <p className="text-xs text-white font-bold uppercase tracking-wider">
-            Find Our Gym
-          </p>
-
-          <p className="text-sm text-white/55 mt-1 leading-relaxed">
-            {gym.address}
-          </p>
-        </div>
-      </div>
+      )}
     </div>
   )
 }
@@ -207,202 +164,123 @@ function GymInfo() {
 export default function Hero() {
   const reduceMotion = useReducedMotion()
 
+  const fadeUp = (delay = 0) => ({
+    initial: reduceMotion ? false : { opacity: 0, y: 25 },
+    animate: { opacity: 1, y: 0 },
+    transition: {
+      duration: reduceMotion ? 0 : 0.7,
+      delay: reduceMotion ? 0 : delay,
+    },
+  })
+
   return (
     <section
       id="home"
-      className="
-        relative isolate
-        min-h-screen
-        flex items-center
-        overflow-hidden
-        bg-ink
-      "
+      className="relative isolate flex min-h-[720px] items-center overflow-hidden bg-black pt-20 sm:min-h-[760px] lg:min-h-[850px]"
     >
       <Background />
 
-      <div
-        className="
-          relative z-10
-          w-full max-w-7xl mx-auto
-          px-5 sm:px-8 lg:px-10
-          pt-32 pb-24
-          lg:pt-36 lg:pb-28
-        "
-      >
-        <div className="
-          grid lg:grid-cols-[1fr_340px]
-          gap-12 lg:gap-16
-          items-center
-        ">
+      <div className="relative z-10 mx-auto w-full max-w-7xl px-5 pb-24 pt-16 sm:px-8 lg:px-10 lg:pb-28 lg:pt-20">
 
-          {/* LEFT CONTENT */}
-          <div className="max-w-4xl">
+        <div className="flex items-center">
+          <div className="w-full max-w-5xl">
 
+            {/* EYEBROW */}
             <motion.div
-              initial={reduceMotion ? false : { opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="flex items-center gap-3 mb-6"
+              {...fadeUp(0)}
+              className="mb-6 flex items-center gap-3"
             >
-              <span className="w-8 h-[2px] bg-accent" />
+              <span className="h-[2px] w-8 bg-accent" />
 
-              <p className="eyebrow">
-                FITNESS. COMMUNITY. PROGRESS.
+              <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-accent sm:text-xs">
+                Fitness. Community. Progress.
               </p>
             </motion.div>
 
             {/* HEADLINE */}
             <motion.h1
-              initial={reduceMotion ? false : { opacity: 0, y: 35 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.1 }}
-              className="
-                h-display
-                text-[clamp(3.2rem,8vw,7.5rem)]
-                leading-[0.91]
-                tracking-tight
-                uppercase
-              "
+              {...fadeUp(0.1)}
+              className="font-display text-[clamp(4rem,10vw,9rem)] font-black uppercase leading-[0.84] tracking-[-0.045em] text-white"
             >
-              Build Your
-              <br />
-              Body.
-              <br />
+              Stronger
 
-              <span
-                className="text-accent"
-                style={{
-                  textShadow: '0 0 35px rgba(220,38,38,0.30)',
-                }}
-              >
-                Transform
-                <br className="hidden sm:block" />
-                Your Life.
+              <span className="block text-accent">
+                Better.
               </span>
             </motion.h1>
 
             {/* DESCRIPTION */}
-            <motion.p
-              initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.25 }}
-              className="
-                mt-7 max-w-xl
-                text-sm sm:text-base lg:text-lg
-                text-white/65 leading-relaxed
-              "
+            <motion.div
+              {...fadeUp(0.2)}
+              className="mt-7 max-w-xl"
             >
-              Push your limits, build your strength, and become
-              the strongest version of yourself. Your journey
-              starts at Fitness Playground.
-            </motion.p>
+              <p className="text-base font-bold text-white sm:text-lg">
+                More than a gym.
+              </p>
+
+              <p className="mt-2 text-sm leading-7 text-white/70 sm:text-base">
+                It’s a playground for your discipline, your strength,
+                and your transformation. Train with purpose and become
+                a stronger version of yourself.
+              </p>
+            </motion.div>
 
             {/* BUTTONS */}
             <motion.div
-              initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.4 }}
-              className="
-                flex flex-col sm:flex-row
-                gap-3 sm:gap-4 mt-9
-              "
+              {...fadeUp(0.3)}
+              className="mt-8 flex flex-col gap-3 sm:flex-row"
             >
               <button
                 type="button"
                 onClick={() => go('membership')}
-                className="
-                  btn btn-primary
-                  inline-flex items-center justify-center gap-3
-                  group
-                "
+                className="btn btn-primary group min-h-12"
               >
-                JOIN THE GYM
+                Join Now
 
                 <ArrowUpRight
                   size={18}
-                  className="
-                    transition-transform
-                    group-hover:translate-x-1
-                    group-hover:-translate-y-1
-                  "
+                  className="transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
                 />
               </button>
 
               <button
                 type="button"
-                onClick={() => go('programs')}
-                className="
-                  btn btn-ghost
-                  inline-flex items-center justify-center gap-3
-                "
+                onClick={() => go('contact')}
+                className="btn btn-ghost min-h-12"
               >
-                EXPLORE PROGRAMS
+                Book a Visit
+
                 <ArrowUpRight size={17} />
               </button>
             </motion.div>
 
-          </div>
+            {/* FEATURES */}
+            <motion.div {...fadeUp(0.4)}>
+              <FeatureStrip />
+            </motion.div>
 
-          {/* RIGHT INFORMATION PANEL */}
-          <motion.div
-            initial={reduceMotion ? false : { opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="hidden lg:flex flex-col gap-6"
-          >
-            <div className="
-              border border-white/10
-              bg-white/[0.025]
-              p-6
-            ">
-              <div className="flex items-center gap-3 mb-5">
-                <div className="h-10 w-10 flex items-center justify-center bg-accent text-white">
-                  <Dumbbell size={21} />
-                </div>
+            {/* LOCATION */}
+            <motion.div
+              {...fadeUp(0.5)}
+              className="mt-6 flex items-start gap-2 text-white/50"
+            >
+              <MapPin
+                size={15}
+                className="mt-0.5 shrink-0 text-accent"
+              />
 
-                <div>
-                  <p className="text-white font-bold text-sm uppercase">
-                    Fitness Playground
-                  </p>
-
-                  <p className="text-white/40 text-xs mt-1">
-                    Train with purpose.
-                  </p>
-                </div>
-              </div>
-
-              <p className="
-                text-white/55 text-sm leading-relaxed
-              ">
-                A space designed for strength, discipline,
-                fitness and a stronger community.
+              <p className="text-xs leading-relaxed">
+                {gym.address}
               </p>
+            </motion.div>
 
-              <button
-                type="button"
-                onClick={() => go('about')}
-                className="
-                  mt-5 text-accent text-xs font-bold
-                  uppercase tracking-widest
-                  flex items-center gap-2
-                  hover:gap-4 transition-all
-                "
-              >
-                Discover More
-                <ArrowUpRight size={15} />
-              </button>
-            </div>
+            {/* HOURS */}
+            <motion.div {...fadeUp(0.55)}>
+              <GymHours />
+            </motion.div>
 
-            <GymInfo />
-          </motion.div>
-
+          </div>
         </div>
-
-        {/* MOBILE GYM INFORMATION */}
-        <div className="lg:hidden mt-10">
-          <GymInfo />
-        </div>
-
       </div>
 
       {/* SCROLL INDICATOR */}
@@ -410,24 +288,17 @@ export default function Hero() {
         type="button"
         onClick={() => go('about')}
         aria-label="Scroll to About section"
-        className="
-          absolute bottom-5 left-1/2
-          -translate-x-1/2
-          flex flex-col items-center gap-1
-          text-white/40
-          hover:text-accent transition-colors
-        "
+        className="absolute bottom-5 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-1 text-white/45 transition-colors hover:text-accent"
       >
-        <span className="text-[9px] tracking-[0.3em] uppercase">
+        <span className="text-[9px] uppercase tracking-[0.3em]">
           Scroll
         </span>
 
         <ChevronDown
-          size={22}
+          size={21}
           className={reduceMotion ? '' : 'animate-bounce'}
         />
       </button>
-
     </section>
   )
 }
